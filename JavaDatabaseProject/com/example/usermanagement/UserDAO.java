@@ -6,7 +6,8 @@ import java.util.List;
 
 public class UserDAO {
     // Database credentials
-    // IMPORTANT: In a real application, consider using environment variables or a configuration file.
+    // IMPORTANT: In a real application, consider using environment variables or a
+    // configuration file.
     private static final String URL = "jdbc:mysql://localhost:3306/user_management?useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "password"; // CHANGE THIS to your MySQL password
@@ -18,13 +19,15 @@ public class UserDAO {
     private static final String DELETE_USERS_SQL = "DELETE FROM users WHERE id = ?;";
     private static final String UPDATE_USERS_SQL = "UPDATE users SET name = ?, email = ? WHERE id = ?;";
 
-    public UserDAO() {}
+    public UserDAO() {
+    }
 
     protected Connection getConnection() {
         Connection connection = null;
         try {
-            // Load the MySQL JDBC driver (Optional for newer JDBC versions but good practice to know)
-            // Class.forName("com.mysql.cj.jdbc.Driver"); 
+            // Load the MySQL JDBC driver (Optional for newer JDBC versions but good
+            // practice to know)
+            // Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,7 +40,7 @@ public class UserDAO {
         System.out.println(INSERT_USERS_SQL);
         // try-with-resources to automatically close Connection and PreparedStatement
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getEmail());
             System.out.println(preparedStatement);
@@ -51,7 +54,7 @@ public class UserDAO {
     public User selectUser(int id) {
         User user = null;
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
             preparedStatement.setInt(1, id);
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
@@ -71,7 +74,7 @@ public class UserDAO {
     public List<User> selectAllUsers() {
         List<User> users = new ArrayList<>();
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS)) {
             System.out.println(preparedStatement);
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -91,7 +94,7 @@ public class UserDAO {
     public boolean updateUser(User user) throws SQLException {
         boolean rowUpdated;
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SQL)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SQL)) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setInt(3, user.getId());
@@ -105,7 +108,7 @@ public class UserDAO {
     public boolean deleteUser(int id) throws SQLException {
         boolean rowDeleted;
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USERS_SQL)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USERS_SQL)) {
             preparedStatement.setInt(1, id);
             rowDeleted = preparedStatement.executeUpdate() > 0;
         }
