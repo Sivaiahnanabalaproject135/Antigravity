@@ -65,8 +65,30 @@ private static final String PASSWORD = "password"; // Change to your MySQL passw
 3.  Add the MySQL Connector/J JAR to the project's **Libraries** or **Dependencies**.
 4.  Run `Main.java` (right-click -> Run).
 
+### Option C: Running as a Backend API (REST)
+
+This option turns the application into a server that listens for HTTP requests.
+
+1.  **Download Gson**: 
+    - Download `gson-2.10.1.jar` from [Maven Central](https://repo1.maven.org/maven2/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar).
+    - Place it in the project folder alongside the MySQL driver.
+
+2.  **Compile**:
+    ```bash
+    javac -cp ".;mysql-connector-j-8.x.x.jar;gson-2.10.1.jar" com\example\usermanagement\*.java
+    ```
+
+3.  **Run**:
+    ```bash
+    java -cp ".;mysql-connector-j-8.x.x.jar;gson-2.10.1.jar" com.example.usermanagement.UserServer
+    ```
+
+4.  **Test**:
+    Open your browser and visit `http://localhost:8080/users`.
+
 ## Project Structure
 - `database.sql`: SQL script for DB setup.
-- `User.java`: The model class representing a user.
-- `UserDAO.java`: Handles all database operations (CRUD).
-- `Main.java`: Tests the application.
+- `User.java`: The model class.
+- `UserDAO.java`: CRUD logic.
+- `Main.java`: Console test code.
+- `UserServer.java`: REST API server.

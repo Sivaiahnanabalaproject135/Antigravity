@@ -10,7 +10,7 @@ public class UserDAO {
     // configuration file.
     private static final String URL = "jdbc:mysql://localhost:3306/user_management?useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
-    private static final String PASSWORD = "password"; // CHANGE THIS to your MySQL password
+    private static final String PASSWORD = "Siva@135#"; // CHANGE THIS to your MySQL password
 
     // SQL Queries
     private static final String INSERT_USERS_SQL = "INSERT INTO users (name, email) VALUES (?, ?);";
@@ -27,9 +27,9 @@ public class UserDAO {
         try {
             // Load the MySQL JDBC driver (Optional for newer JDBC versions but good
             // practice to know)
-            // Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return connection;
